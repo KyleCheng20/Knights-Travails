@@ -35,20 +35,24 @@ function knightMoves(start, end){
         let {position, path} = queue.shift();
         let [x, y] = position;
 
+        // If reached end position
         if(end[0] === x && end[1] === y){
             console.log(`You made it in ${path.length - 1} moves! Here's your path: \n`);
-            path.forEach(element => console.log(`\n${element}`));
+            path.forEach(element => console.log(element));
             return;
         }
 
-        for(let validMoves of getValidMoves(position)){
-            if(!visited.has(validMoves)){
-                visited.add(validMoves.toString());
+        // Check unvisited neighbors
+        for(let nextPosition of getValidMoves(position)){
+            if(!visited.has(nextPosition.toString())){
+                visited.add(nextPosition.toString());
                 queue.push({
-                    position: validMoves,
-                    path: [...path, validMoves]
+                    position: nextPosition,
+                    path: [...path, nextPosition]
                 });
             }
         };
     }
 }
+
+export { knightMoves }
